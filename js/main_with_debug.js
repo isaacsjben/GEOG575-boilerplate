@@ -1,11 +1,11 @@
+//initializing fuction when the script loads
 function initialize(){
 	cities();
-	addColumns();
 	addEvents();
 };
-
+//function to create a table for their cities and populations
 function cities(){
-
+	//define two arrays for cities and populations
 	var cityPop = [
 		{ 
 			city: 'Madison',
@@ -43,23 +43,27 @@ function cities(){
 	  //add the row's html string to the table
 	  table.insertAdjacentHTML('beforeend',rowHtml);
   }
-
+  //using a method chain to add the table to the myDiv element
   document.querySelector("#myDiv").appendChild(table);
-
+  //calling addColumns function to add additional column to table
+  addColumns(cityPop);
 }
+//executing script as soon as the DOM is prepared
 document.addEventListener('DOMContentLoaded',initialize)
 
+//declaring new function addColumns(cityPop)
 function addColumns(cityPop){
-    
+    //using a method chain to loop elements selected with querySelectorAll
     document.querySelectorAll("tr").forEach(function(row, i){
-
+		//for header row (i == 0) giving label 'City Size'
     	if (i == 0){
 
     		row.insertAdjacentHTML('beforeend', '<th>City Size</th>');
+		//for other rows, defining new variable citySize and categorizing them according to cityPop
     	} else {
 
     		var citySize;
-// QUESTION: What does [i-1] mean? Why is it causing an error?
+
     		if (cityPop[i-1].population < 100000){
     			citySize = 'Small';
 
@@ -69,24 +73,24 @@ function addColumns(cityPop){
     		} else {
     			citySize = 'Large';
     		};
-
-			row.insertAdjacentHTML = '<td' + citySize + '</td>';
+			//giving label assigned to citySize to each row
+			row.insertAdjacentHTML('beforeend', '<td>' + citySize + '</td>');
     	};
     });
 };
 
-//QUESTION: No idea what is going on here.
+//declaring new function addEvents()
 function addEvents(){
-
+	//using a method chain to add "mouseover" event to table
 	document.querySelector("table").addEventListener("mouseover", function(){
-		
+		//assigning random color to event
 		var color = "rgb(";
 
 		for (var i=0; i<3; i++){
 
 			var random = Math.round(Math.random() * 255);
 
-			color += "random";
+			color += random;
 
 			if (i<2){
 				color += ",";
@@ -94,15 +98,15 @@ function addEvents(){
 			} else {
 				color += ")";
 		};
-
-		document.querySelector("table").color = color;
+		//making color appear when event is executed
+		document.querySelector("table").style.color = color;
 	};
-
+	//declaring new function clickMe()
 	function clickme(){
-
+		//giving alert with the following string
 		alert('Hey, you clicked me!');
 	};
-
+	//making function execute when event "click" occurs
 	document.querySelector("table").addEventListener("click", clickme)
 });
 };
